@@ -111,7 +111,3 @@ Sau đó truy cập: http://localhost:8080/call-hello
 - Maven
 - Java 17
 - Cloud Native Buildpacks
-
-## License
-
-MIT
