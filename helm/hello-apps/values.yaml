@@ -1,0 +1,27 @@
+dockerHubUsername: datphan06
+
+helloSpringK8s:
+  name: hello-spring-k8s
+  image:
+    repository: ${DOCKERHUB_USERNAME}/hello-spring-k8s
+    tag: latest
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "200m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"
+
+helloCaller:
+  name: hello-caller
+  image:
+    repository: ${DOCKERHUB_USERNAME}/hello-caller
+    tag: latest
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "200m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m" 
