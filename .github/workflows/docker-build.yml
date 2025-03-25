@@ -23,6 +23,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Make mvnw executable
+        run: |
+          chmod +x ./hello-spring-k8s/mvnw
+          chmod +x ./hello-caller/mvnw
+
       - name: Build Hello Spring K8S
         working-directory: ./hello-spring-k8s
         run: ./mvnw clean package
