@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: hello-service
-        image: ghcr.io/DatPhan06/top-spring-on-kubernetes-hello-service:latest
+        image: ghcr.io/datphan06/top-spring-on-kubernetes-hello-service:latest
         ports:
         - containerPort: 8080
         envFrom:

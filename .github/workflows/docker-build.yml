@@ -8,8 +8,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  HELLO_SERVICE_IMAGE: ${{ github.repository }}-hello-service
-  HELLO_CALLER_IMAGE: ${{ github.repository }}-hello-caller
+  HELLO_SERVICE_IMAGE: datphan06/top-spring-on-kubernetes-hello-service
+  HELLO_CALLER_IMAGE: datphan06/top-spring-on-kubernetes-hello-caller
 
 jobs:
   build-and-push:
