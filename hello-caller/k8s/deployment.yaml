@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: hello-caller
-        image: ${DOCKERHUB_USERNAME}/hello-caller:latest
+        image: phucfix/hello-caller:latest
         ports:
         - containerPort: 8080
         envFrom:

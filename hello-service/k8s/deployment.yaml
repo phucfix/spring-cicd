@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: hello-service
-        image: ghcr.io//top-spring-on-kubernetes-hello-service:latest
+        image: phucfix/hello-caller:latest
         ports:
         - containerPort: 8080
         envFrom:
