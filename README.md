@@ -26,9 +26,24 @@ top-spring-on-kubernetes/
     └── pom.xml           # Maven configuration
 ```
 
+## CI/CD với GitHub Actions
+
+Dự án sử dụng GitHub Actions để tự động build và push Docker images lên GitHub Container Registry (ghcr.io) mỗi khi có push hoặc pull request vào nhánh main.
+
+Workflow sẽ:
+1. Build Docker images cho cả hai service
+2. Push images lên GitHub Container Registry
+3. Tự động cập nhật README với tags của images mới nhất
+
+### Latest Docker Images
+
+Latest images are available at:
+- hello-service: `ghcr.io/DatPhan06/top-spring-on-kubernetes-hello-service:latest`
+- hello-caller: `ghcr.io/DatPhan06/top-spring-on-kubernetes-hello-caller:latest`
+
 ## Hướng dẫn chạy
 
-### 1. Build Docker Image
+### 1. Build Docker Image (Local)
 
 Build image cho hello-service:
 ```bash
@@ -102,6 +117,7 @@ Sau đó truy cập: http://localhost:8080/call-hello
 3. Sử dụng Kubernetes ConfigMaps cho cấu hình
 4. Service discovery trong Kubernetes cluster
 5. Graceful shutdown
+6. CI/CD tự động với GitHub Actions
 
 ## Công nghệ sử dụng
 
@@ -111,3 +127,53 @@ Sau đó truy cập: http://localhost:8080/call-hello
 - Maven
 - Java 17
 - Cloud Native Buildpacks
+- GitHub Actions
+- GitHub Container Registry
+
+## License
+
+MIT
+
+## Cấu hình môi trường
+
+Dự án sử dụng Kubernetes ConfigMap để quản lý các biến môi trường. Các file cấu hình được đặt trong thư mục `k8s` của mỗi service:
+
+### Hello Service ConfigMap
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-service-config
+data:
+  SPRING_APPLICATION_NAME: hello-service
+  SERVER_PORT: "8080"
+  GREETING_MESSAGE: "Hello from hello-service!"
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "health,info"
+  MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+  MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+```
+
+### Hello Caller ConfigMap
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-caller-config
+data:
+  SPRING_APPLICATION_NAME: hello-caller
+  SERVER_PORT: "8080"
+  HELLO_SERVICE_URL: "http://hello-service:8080"
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "health,info"
+  MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+  MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS: "always"
+```
+
+Để áp dụng cấu hình môi trường:
+
+```bash
+# Áp dụng ConfigMap cho hello-service
+kubectl apply -f hello-service/k8s/configmap.yaml
+
+# Áp dụng ConfigMap cho hello-caller
+kubectl apply -f hello-caller/k8s/configmap.yaml
+```
