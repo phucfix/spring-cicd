@@ -38,8 +38,8 @@ Workflow sẽ:
 ### Latest Docker Images
 
 Latest images are available at:
-- hello-service: `ghcr.io/DatPhan06/top-spring-on-kubernetes-hello-service:latest`
-- hello-caller: `ghcr.io/DatPhan06/top-spring-on-kubernetes-hello-caller:latest`
+- hello-service: `ghcr.io/datphan06/top-spring-on-kubernetes-hello-service:latest`
+- hello-caller: `ghcr.io/datphan06/top-spring-on-kubernetes-hello-caller:latest`
 
 ## Hướng dẫn chạy
 

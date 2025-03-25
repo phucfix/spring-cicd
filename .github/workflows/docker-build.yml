@@ -27,7 +27,7 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
+          cache: 'maven'
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -40,22 +40,20 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push hello-service
-        uses: docker/build-push-action@v5
-        with:
-          context: ./hello-service
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.HELLO_SERVICE_IMAGE }}:${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+        run: |
+          cd hello-service
+          ./mvnw spring-boot:build-image \
+            -Dspring-boot.build-image.imageName=${{ env.REGISTRY }}/${{ env.HELLO_SERVICE_IMAGE }}:${{ github.sha }} \
+            -Dspring-boot.build-image.publish=true \
+            -Dspring-boot.build-image.builder=paketobuildpacks/builder:base
 
       - name: Build and push hello-caller
-        uses: docker/build-push-action@v5
-        with:
-          context: ./hello-caller
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.HELLO_CALLER_IMAGE }}:${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+        run: |
+          cd hello-caller
+          ./mvnw spring-boot:build-image \
+            -Dspring-boot.build-image.imageName=${{ env.REGISTRY }}/${{ env.HELLO_CALLER_IMAGE }}:${{ github.sha }} \
+            -Dspring-boot.build-image.publish=true \
+            -Dspring-boot.build-image.builder=paketobuildpacks/builder:base
 
       - name: Update README with image tags
         run: |
