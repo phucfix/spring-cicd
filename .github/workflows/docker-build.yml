@@ -50,7 +50,7 @@ jobs:
         with:
           context: ./hello-spring-k8s
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hello-spring-k8s:latest
+          tags: ${{ secrets.DOCKER_USERNAME}}/hello-spring-k8s:latest
           builder: ${{ steps.buildx.outputs.name }}
 
       - name: Build and push Hello Caller image
@@ -58,5 +58,5 @@ jobs:
         with:
           context: ./hello-caller
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hello-caller:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/hello-caller:latest
           builder: ${{ steps.buildx.outputs.name }}
