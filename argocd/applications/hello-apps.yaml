@@ -8,9 +8,7 @@ spec:
   source:
     repoURL: https://github.com/DatPhan06/top-spring-on-kubernetes.git
     targetRevision: HEAD
-    path: |
-      hello-spring-k8s/k8s
-      hello-caller/k8s
+    path: manifests
   destination:
     server: https://kubernetes.default.svc
     namespace: default
@@ -19,4 +17,6 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-    - CreateNamespace=true 
+    - CreateNamespace=true
+    - ApplyOutOfSyncOnly=true
+    - PruneLast=true
